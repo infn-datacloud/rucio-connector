@@ -1,13 +1,24 @@
+import os
+
 from rucio.client import Client
+from dotenv import load_dotenv
+
+load_dotenv()
+
+RUCIO_HOST = os.getenv("RUCIO_HOST")
+AUTH_HOST = os.getenv("AUTH_HOST")
+ACCOUNT = os.getenv("ACCOUNT")
+USERNAME = os.getenv("USERNAME")
+PASSWORD = os.getenv("PASSWORD")
 
 client = Client(
-    rucio_host = "https://rucio.192.135.24.152.myip.cloud.infn.it",
-    auth_host = "https://rucio-auth.192.135.24.152.myip.cloud.infn.it",
-    account = "etserra",
+    rucio_host = RUCIO_HOST,
+    auth_host = AUTH_HOST,
+    account = ACCOUNT,
     auth_type = "userpass",
     creds = {
-        "username": "etserra",
-        "password": "etserrapwd",
+        "username": USERNAME,
+        "password": PASSWORD,
     }
 )
 
