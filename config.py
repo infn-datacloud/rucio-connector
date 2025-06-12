@@ -1,8 +1,6 @@
+from functools import lru_cache
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
-
-# Optional: Load .env early (especially useful for debugging or non-ASGI contexts)
-load_dotenv()
 
 class Settings(BaseSettings):
     RUCIO_HOST: str
@@ -14,4 +12,7 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
 
-settings = Settings()
+# LRU-cached getter
+@lru_cache()
+def get_settings() -> Settings:
+    return Settings()

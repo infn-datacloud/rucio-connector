@@ -1,7 +1,9 @@
 import os
 from fastapi import HTTPException
 from rucio.client import Client
-from config import settings
+from config import get_settings
+
+settings = get_settings()
 
 # Create Rucio client
 client = Client(
