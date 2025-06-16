@@ -1,7 +1,7 @@
 services:
   rucio-connector:
     container_name: rucio-connector
-    image: rucio-connector
+    image: harbor.cloud.infn.it/datacloud-middleware/rucio-connector:ci-python3.12
     ports:
       - "8000:80"
     restart: unless-stopped
