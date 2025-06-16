@@ -1,11 +1,6 @@
-version: '3.9'
-
 services:
   rucio-connector:
     container_name: rucio-connector
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: rucio-connector
     ports:
       - "8000:80"
