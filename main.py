@@ -11,15 +11,14 @@ async def root():
     return {"message": "Hello World"}
 
 
-class ReplicaRequest(BaseModel):
-    scope: str
-    name: str
-
-@app.post("/replicas")
-async def get_replicas_endpoint(data: ReplicaRequest):
+@app.get("/replicas")
+async def get_replicas_endpoint(scope: str, name: str):
     """
-    Endpoint to retrieve replicas using scope and name from the request body.
+    Endpoint to retrieve replicas for a given scope and name.
     """
-    replicas = get_replicas(data.scope, data.name)
+    
+    replicas = get_replicas(scope, name)
     
     return replicas
+
+# print(get_replicas('user.atroja', 'test_TPC'))
