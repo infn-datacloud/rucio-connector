@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "rucio-connector"
 version = "0.1.0"
-description = ""
+description = "Component to exchange information between the PaaS orchestrator and Rucio"
 authors = ["Ettore Serra <ettore.serra@ba.infn.it>", "Giovanni Savarese <giovanni.savarese@ba.infn.it>"]
+license = "Apache License 2.0"
 readme = "README.md"
 package-mode = false
 
@@ -12,6 +13,9 @@ fastapi = ">=0.115.12,<0.116.0"
 pydantic  = ">=2.11.7,<3.0.0"
 pydantic-settings = ">=2.9.1,<3.0.0"
 rucio = ">=37.5.0,<38.0.0"
+
+[tool.poetry.group.dev.dependencies]
+fastapi = {extras = ["standard"], version = "^0.115.12"}
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
