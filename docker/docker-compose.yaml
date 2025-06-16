@@ -6,4 +6,4 @@ services:
       - "8000:80"
     restart: unless-stopped
     env_file:
-      - .env
+      - ../.env
