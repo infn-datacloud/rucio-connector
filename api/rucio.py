@@ -27,5 +27,3 @@ def get_replicas(scope, name):
         return replicas
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-# print(get_replicas('user.atroja', 'test_TPC'))
