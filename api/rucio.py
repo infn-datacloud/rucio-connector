@@ -16,14 +16,14 @@ client = Client(
     }
 )
 
-def get_replicas(scope, name):
+def get_rse(scope, name):
     try:
-        replicas = []
+        rse = []
         did = [{"scope": scope, "name": name}]
 
         for r in client.list_replicas(did):
-            replicas.extend(r.get("rses", {}).keys())
+            rse.extend(r.get("rses", {}).keys())
 
-        return replicas
+        return rse
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

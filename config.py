@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pydantic_settings import BaseSettings
+from typing import List
 
 class Settings(BaseSettings):
     RUCIO_HOST: str
@@ -7,6 +8,7 @@ class Settings(BaseSettings):
     ACCOUNT: str
     USERNAME: str
     PASSWORD: str
+    ALLOWED_ORIGINS: List[str]
 
     class Config:
         env_file = ".env"
