@@ -19,19 +19,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
 
 @app.get("/rse")
-async def get_rse_endpoint(scope: str, name: str):
+async def get_rse_endpoint(did_scope: str, did_name: str):
     """
-    Endpoint to retrieve RSEs for a given scope and name.
+    Endpoint to retrieve RSEs for a given did scope and name.
     """
 
-    rse = get_rse(scope, name)
+    rse = get_rse(did_scope, did_name)
 
     return rse
+
 
 # print(get_rse('user.atroja', 'test_TPC'))

@@ -13,13 +13,14 @@ client = Client(
     creds={
         "username": settings.USERNAME,
         "password": settings.PASSWORD,
-    }
+    },
 )
 
-def get_rse(scope, name):
+
+def get_rse(did_scope, did_name):
     try:
         rse = []
-        did = [{"scope": scope, "name": name}]
+        did = [{"scope": did_scope, "name": did_name}]
 
         for r in client.list_replicas(did):
             rse.extend(r.get("rses", {}).keys())
