@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Security
-from api.rucio import get_rse
+from api.rucio import get_rses
 from fastapi.middleware.cors import CORSMiddleware
 from config import get_settings
 from contextlib import asynccontextmanager
@@ -22,8 +22,6 @@ async def lifespan(app: FastAPI):
     This function is called at application startup and shutdown. It performs:
     - Initializes the application logger and attaches it to the request state.
     - Configures authentication/authorization (Flaat).
-    - Creates database tables if they do not exist.
-    - Cleans up resources and disposes the database engine on shutdown.
 
     Args:
         app: The FastAPI application instance.
@@ -60,19 +58,19 @@ app.add_middleware(
 
 
 @app.get(
-    "/rse",
+    "/rses",
     summary="Retrieve RSEs",
     description="Retrieve a list of RSEs for a given dataset.",
     dependencies=[Security(check_authorization)],
 )
-async def get_rse_endpoint(did_scope: str, did_name: str):
+async def get_rses_endpoint(did_scope: str, did_name: str):
     """
     Endpoint to retrieve RSEs for a given did scope and name.
     """
 
-    rse = get_rse(did_scope, did_name)
+    rses = get_rses(did_scope, did_name)
 
-    return rse
+    return rses
 
 
-# print(get_rse('user.atroja', 'test_TPC'))
+# print(get_rses('user.atroja', 'test_TPC'))

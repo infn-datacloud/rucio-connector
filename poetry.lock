@@ -1399,17 +1399,6 @@ files = [
 PyNaCl = ">=1.2.0"
 
 [[package]]
-name = "logger"
-version = "1.4"
-description = "Python logging helper"
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "logger-1.4.tar.gz", hash = "sha256:4ecac57133c6376fa215f0fe6b4dc4d60e4d1ad8be005cab4e8a702df682f8b3"},
-]
-
-[[package]]
 name = "mako"
 version = "1.3.10"
 description = "A super-fast templating language that borrows the best ideas from the existing templating languages."
@@ -3627,4 +3616,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4"
-content-hash = "f7954cf2cabde381bbf47ae85ea6627ccc8c16c627262d77d5af98fd939648fb"
+content-hash = "2d05ac7b061df424b353e2ac1a2c7a3a58cebb0a2fc3573712045df619b851b6"
