@@ -17,7 +17,7 @@ client = Client(
 )
 
 
-def get_rse(did_scope, did_name):
+def get_rses(did_scope, did_name):
     try:
         rse = []
         did = [{"scope": did_scope, "name": did_name}]
