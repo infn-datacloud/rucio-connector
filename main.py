@@ -55,12 +55,12 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Allow specific origin
-origins = settings.ALLOWED_ORIGINS
-
+# Add CORS middleware to allow cross-origin requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # or ["*"] to allow all origins
+    allow_origins=[
+        str(origin).rstrip("/") for origin in settings.ALLOWED_ORIGINS
+    ],  # or ["*"] to allow all origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
