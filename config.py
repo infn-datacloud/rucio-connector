@@ -1,10 +1,13 @@
+"""Configuration module for Rucio connector, including settings and enums."""
+
 import logging
-from pydantic import Field, BeforeValidator, AnyHttpUrl
-from functools import lru_cache
-from pydantic_settings import BaseSettings
-from typing import Annotated, List
 from enum import Enum
+from functools import lru_cache
+from typing import Annotated
+
 from fastapi import Depends
+from pydantic import AnyHttpUrl, BeforeValidator, Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class AuthenticationMethodsEnum(str, Enum):
@@ -45,6 +48,8 @@ def get_level(value: int | str | LogLevelEnum) -> int:
 
 
 class Settings(BaseSettings):
+    """Configuration settings for the Rucio connector."""
+
     RUCIO_HOST: Annotated[
         str,
         Field(
@@ -81,7 +86,7 @@ class Settings(BaseSettings):
         ),
     ]
     ALLOWED_ORIGINS: Annotated[
-        List[str],
+        list[str],
         Field(
             default=["https://127.0.0.1:5000", "https://localhost:5000"],
             description="List of allowed CORS origins",
@@ -114,13 +119,13 @@ class Settings(BaseSettings):
         BeforeValidator(get_level),
     ]
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 
 # LRU-cached getter
-@lru_cache()
+@lru_cache
 def get_settings() -> Settings:
+    """Get the application settings, cached for performance."""
     return Settings()
 
 
