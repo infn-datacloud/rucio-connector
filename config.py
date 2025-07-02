@@ -52,45 +52,27 @@ class Settings(BaseSettings):
 
     RUCIO_HOST: Annotated[
         str,
-        Field(
-            default="",
-            description="Rucio host URL to connect to the Rucio API",
-        ),
+        Field(default="", description="Rucio host URL to connect to the Rucio API"),
     ]
     AUTH_HOST: Annotated[
         str,
-        Field(
-            default="",
-            description="Rucio authentication host URL",
-        ),
+        Field(default="", description="Rucio authentication host URL"),
     ]
     ACCOUNT: Annotated[
         str,
-        Field(
-            default="",
-            description="Rucio account name",
-        ),
+        Field(default="", description="Rucio account name"),
     ]
     USERNAME: Annotated[
         str,
-        Field(
-            default="",
-            description="Rucio username",
-        ),
+        Field(default="", description="Rucio username"),
     ]
     PASSWORD: Annotated[
         str,
-        Field(
-            default="",
-            description="Rucio password",
-        ),
+        Field(default="", description="Rucio password"),
     ]
     ALLOWED_ORIGINS: Annotated[
-        list[str],
-        Field(
-            default=["https://127.0.0.1:5000", "https://localhost:5000"],
-            description="List of allowed CORS origins",
-        ),
+        list[AnyHttpUrl],
+        Field(default_factory=list, description="List of allowed CORS origins"),
     ]
     AUTHN_MODE: Annotated[
         AuthenticationMethodsEnum | None,
@@ -102,8 +84,7 @@ class Settings(BaseSettings):
     AUTHZ_MODE: Annotated[
         AuthorizationMethodsEnum | None,
         Field(
-            default=None,
-            description="Authorization method to use. Allowed values: opa",
+            default=None, description="Authorization method to use. Allowed values: opa"
         ),
     ]
     TRUSTED_IDP_LIST: Annotated[
