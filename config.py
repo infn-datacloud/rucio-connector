@@ -3,7 +3,7 @@
 import logging
 from enum import Enum
 from functools import lru_cache
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import Depends
 from pydantic import AnyHttpUrl, BeforeValidator, Field
@@ -71,7 +71,7 @@ class Settings(BaseSettings):
         Field(default="", description="Rucio password"),
     ]
     ALLOWED_ORIGINS: Annotated[
-        list[AnyHttpUrl],
+        list[AnyHttpUrl] | Literal["*"],
         Field(default_factory=list, description="List of allowed CORS origins"),
     ]
     AUTHN_MODE: Annotated[
