@@ -1,10 +1,13 @@
+"""Configuration module for Rucio connector, including settings and enums."""
+
 import logging
-from pydantic import Field, BeforeValidator, AnyHttpUrl
-from functools import lru_cache
-from pydantic_settings import BaseSettings
-from typing import Annotated, List
 from enum import Enum
+from functools import lru_cache
+from typing import Annotated, Literal
+
 from fastapi import Depends
+from pydantic import AnyHttpUrl, BeforeValidator, Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class AuthenticationMethodsEnum(str, Enum):
@@ -45,47 +48,31 @@ def get_level(value: int | str | LogLevelEnum) -> int:
 
 
 class Settings(BaseSettings):
+    """Configuration settings for the Rucio connector."""
+
     RUCIO_HOST: Annotated[
         str,
-        Field(
-            default="",
-            description="Rucio host URL to connect to the Rucio API",
-        ),
+        Field(default="", description="Rucio host URL to connect to the Rucio API"),
     ]
     AUTH_HOST: Annotated[
         str,
-        Field(
-            default="",
-            description="Rucio authentication host URL",
-        ),
+        Field(default="", description="Rucio authentication host URL"),
     ]
     ACCOUNT: Annotated[
         str,
-        Field(
-            default="",
-            description="Rucio account name",
-        ),
+        Field(default="", description="Rucio account name"),
     ]
     USERNAME: Annotated[
         str,
-        Field(
-            default="",
-            description="Rucio username",
-        ),
+        Field(default="", description="Rucio username"),
     ]
     PASSWORD: Annotated[
         str,
-        Field(
-            default="",
-            description="Rucio password",
-        ),
+        Field(default="", description="Rucio password"),
     ]
     ALLOWED_ORIGINS: Annotated[
-        List[str],
-        Field(
-            default=["https://127.0.0.1:5000", "https://localhost:5000"],
-            description="List of allowed CORS origins",
-        ),
+        list[AnyHttpUrl] | Literal["*"],
+        Field(default_factory=list, description="List of allowed CORS origins"),
     ]
     AUTHN_MODE: Annotated[
         AuthenticationMethodsEnum | None,
@@ -97,8 +84,7 @@ class Settings(BaseSettings):
     AUTHZ_MODE: Annotated[
         AuthorizationMethodsEnum | None,
         Field(
-            default=None,
-            description="Authorization method to use. Allowed values: opa",
+            default=None, description="Authorization method to use. Allowed values: opa"
         ),
     ]
     TRUSTED_IDP_LIST: Annotated[
@@ -114,13 +100,13 @@ class Settings(BaseSettings):
         BeforeValidator(get_level),
     ]
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 
 # LRU-cached getter
-@lru_cache()
+@lru_cache
 def get_settings() -> Settings:
+    """Get the application settings, cached for performance."""
     return Settings()
 
 

@@ -32,5 +32,7 @@ RUN pip install --upgrade pip \
 COPY ./api /app/api
 COPY ./main.py /app/main.py
 COPY ./config.py /app/config.py
+COPY ./auth.py /app/auth.py
+COPY ./logger.py /app/logger.py
 
 CMD ["fastapi", "run", "/app/main.py", "--port", "80"]
