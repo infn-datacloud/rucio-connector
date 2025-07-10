@@ -67,6 +67,12 @@ app.add_middleware(
 )
 
 
+@app.get("/", dependencies=[Security(check_authorization)])
+def read_root():
+    """Root endpoint of the Rucio Connector API."""
+    return {"message": "Hello World"}
+
+
 @app.get(
     "/rses",
     summary="Retrieve RSEs",
