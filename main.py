@@ -6,7 +6,7 @@ and provides endpoints to interact with Rucio for retrieving RSEs.
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Security
+from fastapi import FastAPI, Request, Security
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.rucio import get_rses
@@ -73,12 +73,13 @@ app.add_middleware(
     description="Retrieve a list of RSEs for a given DID.",
     dependencies=[Security(check_authorization)],
 )
-async def get_rses_endpoint(did_scope: str, did_name: str):
+async def get_rses_endpoint(request: Request, did_scope: str, did_name: str):
     """Asynchronously retrieve the list of RSEs associated with a given DID.
 
     Use scope and name to define the target DID.
 
     Args:
+        request: User request
         did_scope (str): The scope of the data identifier.
         did_name (str): The name of the data identifier.
 
@@ -89,6 +90,6 @@ async def get_rses_endpoint(did_scope: str, did_name: str):
         rses = await get_rses_endpoint("scope", "name")
 
     """
-    rses = get_rses(did_scope, did_name)
+    rses = get_rses(did_scope, did_name, request.state.logger)
 
     return rses

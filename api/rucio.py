@@ -1,5 +1,6 @@
 """Rucio API connector module for interacting with Rucio client and FastAPI."""
 
+from logging import Logger
 from typing import Any
 
 from fastapi import HTTPException, status
@@ -22,12 +23,13 @@ client = Client(
 )
 
 
-def get_rses(did_scope: str, did_name: str) -> list[dict[str, Any]]:
+def get_rses(did_scope: str, did_name: str, logger: Logger) -> list[dict[str, Any]]:
     """Retrieve the list of RSEs (Rucio Storage Elements) for a given DID (Data ID).
 
     Args:
         did_scope (str): The scope of the DID.
         did_name (str): The name of the DID.
+        logger (Logger): The logger instance.
 
     Returns:
         list: A list of RSE names where the DID is replicated.
@@ -39,11 +41,17 @@ def get_rses(did_scope: str, did_name: str) -> list[dict[str, Any]]:
     try:
         rse = []
         did = [{"scope": did_scope, "name": did_name}]
+        logger.debug(did)
 
-        for r in client.list_replicas(did):
+        replicas = client.list_replicas(did)
+        logger.debug(replicas)
+
+        for r in replicas:
             rse.extend(r.get("rses", {}).keys())
 
+        logger.debug(rse)
         return rse
+
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
